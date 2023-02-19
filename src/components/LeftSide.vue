@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed h-3/4 mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="h-3/4 mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
   >
     <div class="flex items-center py-10 px-10">
       <img
@@ -8,7 +8,7 @@
         src="@/assets/img/ait elkadi.jpeg"
         alt="Bonnie image"
       />
-      <div class="flex flex-col px-10">
+      <div class="flex flex-col px-8">
         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
           Bonnie Green
         </h5>
@@ -41,7 +41,6 @@
       </div>
       <div class="flex justify-between mt-8 px-8">
         <button class="text-blue-600">view all</button>
-        <button class="text-blue-600">Add more</button>
       </div>
     </div>
   </div>
