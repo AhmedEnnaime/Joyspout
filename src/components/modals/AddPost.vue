@@ -1,6 +1,14 @@
 <script setup>
 import { Modal } from "flowbite-vue";
 import "@formkit/themes/genesis";
+import { reactive } from "vue";
+
+const post = reactive({
+  description: "",
+  user_id: "",
+  content: [],
+  category_id: [],
+});
 
 const props = defineProps({
   showModal: {
@@ -16,34 +24,56 @@ const props = defineProps({
 </script>
 
 <template>
-  <Modal v-if="props.showModal" @close="props.closeModal">
+  <Modal
+    class="overflow-y-scroll"
+    v-if="props.showModal"
+    @close="props.closeModal"
+  >
     <template #header>
       <div class="flex items-center text-lg">Share post</div>
     </template>
     <template #body>
+      <FormKit type="form" :actions="false" form-class="hide" />
       <FormKit
-        name="content"
+        name="description"
         type="textarea"
+        v-model="post.description"
         placeholder="What's on your mind Samir ?"
+      />
+      <FormKit
+        name="category_id"
+        type="checkbox"
+        v-model="post.category_id"
+        :options="[
+          { label: 'Socials', value: 3 },
+          { label: 'Entertainment', value: 4 },
+          { label: 'Education', value: 6 },
+          { label: 'Gaming', value: 8 },
+          { label: 'Finance', value: 9 },
+          { label: 'Anime', value: 99 },
+          { label: 'Movies', value: 66 },
+        ]"
       />
       <div
         class="flex justify-between items-center p-4 border-2 border-gray-200 rounded-md"
       >
         <p>Add to your post</p>
         <FormKit
-          name="attachment[]"
+          name="content[]"
+          v-model="post.content"
           type="file"
-          style="display: none"
+          multiple
           id="attachment"
         />
-        <label for="attachment">
+        <!-- <label for="attachment">
           <i
             class="fa-sharp fa-solid fa-paperclip text-yellow-300 text-2xl cursor-pointer"
           ></i>
-        </label>
+        </label> -->
       </div>
     </template>
     <template #footer>
+      <pre wrap="">{{ post }}</pre>
       <div class="flex w-full">
         <button
           @click="props.closeModal"
