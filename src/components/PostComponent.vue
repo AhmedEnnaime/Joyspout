@@ -2,8 +2,18 @@
 import OptionsButton from "@/components/OptionsButton.vue";
 import { ref } from "vue";
 import LikesModal from "./modals/LikesModal.vue";
+import CommentsModal from "@/components/modals/CommentsModal.vue";
 
 const Modal = ref(false);
+const CommentModal = ref(false);
+
+const showCommentsModal = () => {
+  CommentModal.value = true;
+};
+
+const closeCommentsModal = () => {
+  CommentModal.value = false;
+};
 
 const showModal = () => {
   Modal.value = true;
@@ -51,12 +61,22 @@ const toggleLike = () => {
           @click="toggleLike"
           class="like fa-sharp fa-regular fa-heart text-2xl cursor-pointer"
         ></i>
-        <i class="fa-sharp fa-regular fa-comment text-2xl cursor-pointer"></i>
+        <i
+          @click="showCommentsModal"
+          class="fa-sharp fa-regular fa-comment text-2xl cursor-pointer"
+        ></i>
       </div>
       <p @click="showModal" class="font-bold cursor-pointer">120 likes</p>
     </div>
   </div>
   <div v-if="Modal">
     <LikesModal :show-modal="Modal" :close-modal="closeModal" />
+  </div>
+
+  <div v-if="CommentModal">
+    <CommentsModal
+      :show-modal="CommentModal"
+      :close-modal="closeCommentsModal"
+    />
   </div>
 </template>
