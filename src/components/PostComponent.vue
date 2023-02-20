@@ -1,6 +1,17 @@
 <script setup>
 import OptionsButton from "@/components/OptionsButton.vue";
+import { ref } from "vue";
+import LikesModal from "./modals/LikesModal.vue";
 
+const Modal = ref(false);
+
+const showModal = () => {
+  Modal.value = true;
+};
+
+const closeModal = () => {
+  Modal.value = false;
+};
 const toggleLike = () => {
   const likes = document.querySelectorAll(".like");
   for (let like of likes) {
@@ -8,6 +19,7 @@ const toggleLike = () => {
   }
 };
 </script>
+
 <template>
   <div
     class="block max-w-full w-3/4 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
@@ -41,7 +53,10 @@ const toggleLike = () => {
         ></i>
         <i class="fa-sharp fa-regular fa-comment text-2xl cursor-pointer"></i>
       </div>
-      <p class="font-bold cursor-pointer">120 likes</p>
+      <p @click="showModal" class="font-bold cursor-pointer">120 likes</p>
     </div>
+  </div>
+  <div v-if="Modal">
+    <LikesModal :show-modal="Modal" :close-modal="closeModal" />
   </div>
 </template>
