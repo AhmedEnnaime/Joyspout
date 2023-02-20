@@ -33,16 +33,18 @@ const props = defineProps({
       <div class="flex items-center text-lg">Share post</div>
     </template>
     <template #body>
-      <FormKit type="form" :actions="false" form-class="hide" />
+      <FormKit type="form" :actions="false" />
       <FormKit
         name="description"
         type="textarea"
         v-model="post.description"
+        validation="required"
         placeholder="What's on your mind Samir ?"
       />
       <FormKit
         name="category_id"
         type="checkbox"
+        validation="required"
         v-model="post.category_id"
         :options="[
           { label: 'Socials', value: 3 },
@@ -62,6 +64,7 @@ const props = defineProps({
           name="content[]"
           v-model="post.content"
           type="file"
+          accept=".jpg,.png,.pdf"
           multiple
           id="attachment"
         />
@@ -73,7 +76,6 @@ const props = defineProps({
       </div>
     </template>
     <template #footer>
-      <pre wrap="">{{ post }}</pre>
       <div class="flex w-full">
         <button
           @click="props.closeModal"
