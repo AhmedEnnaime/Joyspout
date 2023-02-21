@@ -16,9 +16,8 @@ const login = async () => {
   await axios
     .post(`${url}/login`, credentials)
     .then((res) => {
-      console.log(res);
       if (res.status === 200) {
-        sessionStorage.setItem("Authenticated", true);
+        sessionStorage.setItem("token", res.data.data.token);
         router.push("/");
       }
     })

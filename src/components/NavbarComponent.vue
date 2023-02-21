@@ -5,6 +5,8 @@ import { useRouter } from "vue-router";
 
 const url = "http://localhost:8000/api";
 const router = useRouter();
+const token = sessionStorage.getItem("token");
+axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 const logout = async () => {
   await axios

@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 onMounted(async () => {
-  if (sessionStorage.getItem("Authenticated")) {
+  if (sessionStorage.getItem("token")) {
     router.push("/");
   }
 });
