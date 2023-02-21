@@ -1,8 +1,8 @@
 <template>
   <div
-    class="h-3/4 mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="h-3/5 mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
   >
-    <div class="flex items-center py-10 px-10">
+    <div class="flex items-center py-4 px-10">
       <img
         class="w-16 h-22 mb-3 rounded-full shadow-lg"
         src="@/assets/img/ait elkadi.jpeg"
