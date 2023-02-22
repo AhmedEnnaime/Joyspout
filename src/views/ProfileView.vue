@@ -1,17 +1,21 @@
 <script setup>
 import NavbarComponent from "@/components/NavbarComponent.vue";
-// import { useAuthStore } from "@/stores/auth";
-// import { computed } from "vue";
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 
-// const usere = computed(() => useAuthStore().state.user);
-// console.log(usere);
-const user = {
-  name: "Debbie Lewis",
-  handle: "deblewis",
-  email: "debbielewis@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80",
-};
+const token = sessionStorage.getItem("token");
+const router = useRouter();
+const user = useAuthStore();
+
+onMounted(async () => {
+  if (!token) {
+    router.push("/login");
+  }
+  await user.getAuthUser();
+});
+const myArr = user.state.user?.created_at.split("T");
+let created_at = myArr[0];
 </script>
 
 <template>
@@ -48,6 +52,7 @@ const user = {
                         type="text"
                         name="name"
                         id="name"
+                        :value="user.state.user.name"
                         autocomplete="given-name"
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                       />
@@ -63,6 +68,7 @@ const user = {
                         type="date"
                         name="birthday"
                         id="birthday"
+                        :value="user.state.user.birthday"
                         autocomplete="family-name"
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                       />
@@ -78,6 +84,7 @@ const user = {
                         type="email"
                         name="email"
                         id="email"
+                        :value="user.state.user.email"
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                       />
                     </div>
@@ -92,6 +99,7 @@ const user = {
                         type="text"
                         name="phone"
                         id="phone"
+                        :value="user.state.user.phone"
                         autocomplete="organization"
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                       />
@@ -107,6 +115,7 @@ const user = {
                         type="text"
                         name="created_at"
                         id="created_at"
+                        :value="created_at"
                         readonly
                         autocomplete="organization"
                         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
@@ -129,11 +138,7 @@ const user = {
                           class="flex-shrink-0 inline-block rounded-full overflow-hidden h-12 w-12"
                           aria-hidden="true"
                         >
-                          <img
-                            class="rounded-full h-full w-full"
-                            :src="user.imageUrl"
-                            alt=""
-                          />
+                          <img class="rounded-full h-full w-full" alt="" />
                         </div>
                         <div class="ml-5 rounded-md shadow-sm">
                           <div
@@ -181,6 +186,12 @@ const user = {
                     </div>
                   </div>
                 </div>
+                <button
+                  type="submit"
+                  class="text-white mt-10 w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Update
+                </button>
               </div>
             </form>
           </div>
