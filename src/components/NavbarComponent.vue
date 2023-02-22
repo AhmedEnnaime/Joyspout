@@ -2,6 +2,7 @@
 import { Navbar, NavbarLogo } from "flowbite-vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
 const url = "http://localhost:8000/api";
 const router = useRouter();
@@ -12,10 +13,10 @@ const logout = async () => {
   await axios
     .post(`${url}/logout`)
     .then((res) => {
-      console.log(res.data);
       if (res.status === 200) {
-        sessionStorage.removeItem("Authenticated");
+        sessionStorage.removeItem("token");
         sessionStorage.clear();
+        useAuthStore().clearUser();
         router.push("/login");
       }
     })

@@ -7,6 +7,7 @@ import axios from "axios";
 import { onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
+import ButtonOptions from "@/components/ButtonOptions.vue";
 
 const url = "http://localhost:8000/api";
 const token = sessionStorage.getItem("token");
@@ -43,6 +44,7 @@ const user = computed(() => useAuthStore().state.user);
       <LeftSide />
       <div class="flex flex-col w-full gap-y-12 h-4/5 mt-12 overflow-y-scroll">
         <SharePost />
+        <ButtonOptions />
         <HomeComponent />
       </div>
     </div>

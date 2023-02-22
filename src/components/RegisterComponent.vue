@@ -1,8 +1,16 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+
+// const fileInput = ref([]);
+
+// const getFileName = () => {
+//   fileInput.value.forEach((fileItem) => {
+//     return fileItem;
+//   });
+// };
 
 const user = reactive({
   name: "",
@@ -11,7 +19,7 @@ const user = reactive({
   email: "",
   password: "",
   c_password: "",
-  img: "",
+  img: [],
 });
 
 const router = useRouter();
@@ -19,17 +27,19 @@ const router = useRouter();
 const url = "http://localhost:8000/api";
 
 const register = async () => {
-  await axios
-    .post(`${url}/register`, user)
-    .then((res) => {
-      console.log(res.data);
-      if (res.status === 201) {
-        router("/login");
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  // console.log(getFileName());
+  console.log(user);
+  // await axios
+  //   .post(`${url}/register`, user)
+  //   .then((res) => {
+  //     console.log(res.data);
+  //     if (res.status === 201) {
+  //       router("/login");
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 };
 </script>
 <template>
