@@ -34,6 +34,7 @@ const getAuthUser = async () => {
       console.log(err);
     });
 };
+
 const user = computed(() => useAuthStore().state.user);
 </script>
 
@@ -44,6 +45,7 @@ const user = computed(() => useAuthStore().state.user);
       <LeftSide />
       <div class="flex flex-col w-full gap-y-12 h-4/5 mt-12 overflow-y-scroll">
         <SharePost />
+        <pre wrap="">{{ user }}</pre>
         <ButtonOptions />
         <HomeComponent />
       </div>
