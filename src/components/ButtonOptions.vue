@@ -1,47 +1,59 @@
+<script setup>
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+</script>
 <template>
-  <div class="flex items-center md:order-2">
-    <button
-      type="button"
-      class="flex mr-3 text-s rounded-full md:mr-0"
-      id="user-menu-button"
-      aria-expanded="false"
-      data-dropdown-toggle="button-dropdown"
-      data-dropdown-placement="bottom"
-    >
-      <span class="sr-only">Open user menu</span>
-      <svg
-        class="w-6 h-6"
-        aria-hidden="true"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+  <div
+    class="mt-4 flex items-center justify-between sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:justify-start"
+  >
+    <Menu as="div" class="ml-3 relative inline-block text-left">
+      <div>
+        <MenuButton
+          class="-my-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <span class="sr-only">Open options</span>
+          <i class="fa-solid fa-ellipsis h-5 w-5" aria-hidden="true"></i>
+          <!-- <DotsVerticalIcon class="h-5 w-5" aria-hidden="true" /> -->
+        </MenuButton>
+      </div>
+
+      <transition
+        enter-active-class="transition ease-out duration-100"
+        enter-from-class="transform opacity-0 scale-95"
+        enter-to-class="transform opacity-100 scale-100"
+        leave-active-class="transition ease-in duration-75"
+        leave-from-class="transform opacity-100 scale-100"
+        leave-to-class="transform opacity-0 scale-95"
       >
-        <path
-          d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-        ></path>
-      </svg>
-    </button>
-    <!-- Dropdown menu -->
-    <div
-      class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-      id="button-dropdown"
-    >
-      <ul class="py-2" aria-labelledby="user-menu-button">
-        <li>
-          <a
-            href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >Edit</a
-          >
-        </li>
-        <li>
-          <a
-            href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >Delete</a
-          >
-        </li>
-      </ul>
-    </div>
+        <MenuItems
+          class="origin-top-right absolute right-0 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+        >
+          <div class="py-1">
+            <MenuItem v-slot="{ active }">
+              <a
+                href="#"
+                :class="[
+                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                  'flex justify-between px-4 py-2 text-sm',
+                ]"
+              >
+                <span>Edit</span>
+              </a>
+            </MenuItem>
+
+            <MenuItem v-slot="{ active }">
+              <button
+                type="button"
+                :class="[
+                  active ? 'bg-gray-100 text-red-600' : 'text-gray-700',
+                  'w-full flex justify-between px-4 py-2 text-sm',
+                ]"
+              >
+                <span>Delete</span>
+              </button>
+            </MenuItem>
+          </div>
+        </MenuItems>
+      </transition>
+    </Menu>
   </div>
 </template>

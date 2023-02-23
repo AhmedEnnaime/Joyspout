@@ -7,7 +7,6 @@ import SharePost from "@/components/SharePost.vue";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
-import ButtonOptions from "@/components/ButtonOptions.vue";
 
 const token = sessionStorage.getItem("token");
 const router = useRouter();
@@ -28,7 +27,6 @@ onMounted(async () => {
       <LeftSide />
       <div class="flex flex-col w-full gap-y-12 h-4/5 mt-12 overflow-y-scroll">
         <SharePost />
-        <ButtonOptions />
         <HomeComponent />
       </div>
     </div>

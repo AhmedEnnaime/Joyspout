@@ -4,13 +4,7 @@ import { reactive, ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-// const fileInput = ref([]);
-
-// const getFileName = () => {
-//   fileInput.value.forEach((fileItem) => {
-//     return fileItem;
-//   });
-// };
+const fileInput = ref([]);
 
 const user = reactive({
   name: "",
@@ -19,7 +13,7 @@ const user = reactive({
   email: "",
   password: "",
   c_password: "",
-  img: [],
+  img: fileInput.value[0]?.name,
 });
 
 const router = useRouter();
@@ -27,19 +21,18 @@ const router = useRouter();
 const url = "http://localhost:8000/api";
 
 const register = async () => {
-  // console.log(getFileName());
-  console.log(user);
-  // await axios
-  //   .post(`${url}/register`, user)
-  //   .then((res) => {
-  //     console.log(res.data);
-  //     if (res.status === 201) {
-  //       router("/login");
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  user.img = fileInput.value[0]?.name;
+  await axios
+    .post(`${url}/register`, user)
+    .then((res) => {
+      console.log(res.data);
+      if (res.status === 201) {
+        router.push("/login");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 </script>
 <template>
@@ -108,7 +101,7 @@ const register = async () => {
           name="img"
           id="img"
           label="Image"
-          v-model="user.img"
+          v-model="fileInput"
           placeholder="Upload image"
           validation="required"
         />
@@ -161,6 +154,5 @@ const register = async () => {
         >Log in</RouterLink
       >
     </div>
-    <pre wrap="">{{ user }}</pre>
   </div>
 </template>

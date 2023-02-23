@@ -1,8 +1,8 @@
 <script setup>
-import OptionsButton from "@/components/OptionsButton.vue";
 import { ref } from "vue";
 import LikesModal from "./modals/LikesModal.vue";
 import CommentsModal from "@/components/modals/CommentsModal.vue";
+import ButtonOptions from "./ButtonOptions.vue";
 
 const Modal = ref(false);
 const CommentModal = ref(false);
@@ -44,7 +44,7 @@ const toggleLike = () => {
           />
           <p class="font-semibold">Samir Ait el kadi</p>
         </div>
-        <OptionsButton />
+        <ButtonOptions />
       </div>
 
       <p class="font-normal text-gray-700 dark:text-gray-400">

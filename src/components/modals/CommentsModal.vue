@@ -46,8 +46,11 @@ const props = defineProps({
           src="@/assets/img/ait elkadi.jpeg"
           alt="user photo"
         />
-        <div class="flex flex-col gap-y-2 p-2 rounded-lg bg-gray-200">
-          <p class="font-bold">Samir Ait elkadi</p>
+        <div class="flex flex-col p-2 rounded-lg bg-gray-200">
+          <div class="flex gap-x-4 items-center">
+            <p class="font-bold">Samir Ait elkadi</p>
+            <ButtonOptions />
+          </div>
           <p class="pl-2">I like this post so much</p>
         </div>
       </div>
@@ -58,8 +61,11 @@ const props = defineProps({
           src="@/assets/img/ait elkadi.jpeg"
           alt="user photo"
         />
-        <div class="flex flex-col gap-y-2 p-2 rounded-lg bg-gray-200">
-          <p class="font-bold">Samir Ait elkadi</p>
+        <div class="flex flex-col p-2 rounded-lg bg-gray-200">
+          <div class="flex gap-x-4 items-center">
+            <p class="font-bold">Samir Ait elkadi</p>
+            <ButtonOptions />
+          </div>
           <p class="pl-2">I like this post so much</p>
         </div>
       </div>
@@ -70,8 +76,11 @@ const props = defineProps({
           src="@/assets/img/ait elkadi.jpeg"
           alt="user photo"
         />
-        <div class="flex flex-col gap-y-2 p-2 rounded-lg bg-gray-200">
-          <p class="font-bold">Samir Ait elkadi</p>
+        <div class="flex flex-col p-2 rounded-lg bg-gray-200">
+          <div class="flex gap-x-4 items-center">
+            <p class="font-bold">Samir Ait elkadi</p>
+            <ButtonOptions />
+          </div>
           <p class="pl-2">I like this post so much</p>
         </div>
       </div>
