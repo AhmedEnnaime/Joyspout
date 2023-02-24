@@ -1,5 +1,68 @@
 <script setup>
 import PostComponent from "./PostComponent.vue";
+import axios from "axios";
+import { onMounted } from "vue";
+import { reactive } from "vue";
+
+const posts = reactive({
+  id: 0,
+  description: "",
+  user_id: 0,
+  created_at: "",
+});
+
+const postsOwners = reactive({
+  id: 0,
+  name: "",
+  birthday: "",
+  phone: "",
+  email: "",
+  img: "",
+});
+
+const comments = reactive({
+  id: 0,
+  content: "",
+  post_id: 0,
+  created_at: "",
+  user: {
+    id: 0,
+    name: "",
+    birthday: "",
+    phone: "",
+    email: "",
+    img: "",
+  },
+});
+
+const likes = reactive({
+  id: 0,
+  post_id: 0,
+  user_id: 0,
+  user: {
+    id: 0,
+    name: "",
+    birthday: "",
+    phone: "",
+    email: "",
+    img: "",
+  },
+});
+onMounted(async () => {
+  await getPosts();
+});
+
+const url = "http://localhost:8000/api";
+const getPosts = async () => {
+  await axios
+    .get(`${url}/posts`)
+    .then((res) => {
+      console.log(res.data.data[0].likes);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 </script>
 
 <template>

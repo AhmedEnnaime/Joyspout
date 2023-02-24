@@ -8,6 +8,10 @@ const token = sessionStorage.getItem("token");
 const router = useRouter();
 const user = useAuthStore();
 
+const getUserImage = (fileName) => {
+  return "http://localhost:8000/uploads/" + fileName;
+};
+
 onMounted(async () => {
   if (!token) {
     router.push("/login");
@@ -167,7 +171,7 @@ let created_at = myArr[0];
                     >
                       <img
                         class="relative rounded-full w-40 h-40"
-                        :src="user.imageUrl"
+                        :src="getUserImage(user.state.user?.img)"
                         alt=""
                       />
                       <label

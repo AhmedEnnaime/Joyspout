@@ -1,3 +1,13 @@
+<script setup>
+import { useAuthStore } from "@/stores/auth";
+
+const user = useAuthStore().state.user;
+
+const getUserImage = (fileName) => {
+  return "http://localhost:8000/uploads/" + fileName;
+};
+</script>
+
 <template>
   <div
     class="h-3/5 mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
@@ -5,16 +15,16 @@
     <div class="flex items-center py-4 px-10">
       <img
         class="w-16 h-22 mb-3 rounded-full shadow-lg"
-        src="@/assets/img/ait elkadi.jpeg"
-        alt="Bonnie image"
+        :src="getUserImage(user?.img)"
+        alt="User image"
       />
       <div class="flex flex-col px-8">
         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-          Bonnie Green
+          {{ user?.name }}
         </h5>
-        <span class="text-sm text-gray-500 dark:text-gray-400"
-          >ahmedennaime20@gmail.com</span
-        >
+        <span class="text-sm text-gray-500 dark:text-gray-400">{{
+          user?.email
+        }}</span>
       </div>
     </div>
     <hr />

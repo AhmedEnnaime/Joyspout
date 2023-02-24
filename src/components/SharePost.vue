@@ -1,7 +1,13 @@
 <script setup>
 import { ref } from "vue";
 import AddPost from "./modals/AddPost.vue";
+import { useAuthStore } from "@/stores/auth";
 
+const user = useAuthStore().state.user;
+
+const getUserImage = (fileName) => {
+  return "http://localhost:8000/uploads/" + fileName;
+};
 const Modal = ref(false);
 
 const showModal = () => {
@@ -21,7 +27,7 @@ const closeModal = () => {
       <div class="flex mb-6 gap-x-6">
         <img
           class="w-12 h-12 mb-3 rounded-full shadow-lg"
-          src="@/assets/img/ait elkadi.jpeg"
+          :src="getUserImage(user?.img)"
           alt="Bonnie image"
         />
         <input

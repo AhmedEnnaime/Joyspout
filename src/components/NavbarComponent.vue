@@ -17,7 +17,11 @@ const router = useRouter();
 const token = sessionStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-// const user = useAuthStore();
+const user = useAuthStore().state.user;
+
+const getUserImage = (fileName) => {
+  return "http://localhost:8000/uploads/" + fileName;
+};
 const logout = async () => {
   await axios
     .post(`${url}/logout`)
@@ -104,7 +108,7 @@ const logout = async () => {
                 <span class="sr-only">Open user menu</span>
                 <img
                   class="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  :src="getUserImage(user?.img)"
                   alt=""
                 />
               </MenuButton>
@@ -125,7 +129,7 @@ const logout = async () => {
                     to="/"
                     :class="[
                       active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700',
+                      'block px-4 py-2 text-sm text-gray-700 cursor-pointer',
                     ]"
                     >Home</RouterLink
                   >
@@ -135,7 +139,7 @@ const logout = async () => {
                     to="/profile"
                     :class="[
                       active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700',
+                      'block px-4 py-2 text-sm text-gray-700 cursor-pointer',
                     ]"
                     >My Profile</RouterLink
                   >
@@ -145,7 +149,7 @@ const logout = async () => {
                     @click="logout"
                     :class="[
                       active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700',
+                      'block px-4 py-2 text-sm text-gray-700 cursor-pointer',
                     ]"
                     >Sign out</a
                   >

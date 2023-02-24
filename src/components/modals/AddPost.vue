@@ -3,14 +3,11 @@ import { Modal } from "flowbite-vue";
 import "@formkit/themes/genesis";
 import { reactive, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
+import axios from "axios";
 
 const user = useAuthStore().state.user;
 const fileInput = ref([]);
-// const getFileName = () => {
-//   fileInput.value.forEach((fileItem) => {
-//     return fileItem;
-//   });
-// };
+
 const post = reactive({
   description: "",
   user_id: user?.id,
@@ -29,12 +26,24 @@ const props = defineProps({
     type: Function,
   },
 });
+const url = "http://localhost:8000/api";
 
-const sharePost = () => {
+const sharePost = async () => {
   fileInput.value.forEach((fileItem) => {
-    post.content.push(fileItem);
+    post.content.push(fileItem.name);
   });
-  console.log(post);
+
+  await axios
+    .post(`${url}/posts`, post)
+    .then((res) => {
+      console.log(res.data);
+      if (res.status === 201) {
+        props.closeModal();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 </script>
 
@@ -48,7 +57,7 @@ const sharePost = () => {
       <div class="flex items-center text-lg">Share post</div>
     </template>
     <template #body>
-      <FormKit type="form" @submit.prevent="sharePost" :actions="false" />
+      <FormKit type="form" :actions="false" />
       <FormKit
         name="description"
         type="textarea"
@@ -93,7 +102,7 @@ const sharePost = () => {
     <template #footer>
       <div class="flex w-full">
         <button
-          @click="props.closeModal"
+          @click="sharePost"
           type="submit"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full"
         >
