@@ -4,6 +4,28 @@ import LikesModal from "./modals/LikesModal.vue";
 import CommentsModal from "@/components/modals/CommentsModal.vue";
 import ButtonOptions from "./ButtonOptions.vue";
 
+// const props = defineProps({
+//   posts: {
+//     required: true,
+//     type: Array,
+//   },
+//   comments: {
+//     required: true,
+//     type: Array,
+//   },
+//   likes: {
+//     required: true,
+//     type: Array,
+//   },
+//   medias: {
+//     required: true,
+//     type: Array,
+//   },
+//   categories: {
+//     required: true,
+//     type: Array,
+//   },
+// });
 const Modal = ref(false);
 const CommentModal = ref(false);
 

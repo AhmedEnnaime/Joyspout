@@ -4,50 +4,72 @@ import axios from "axios";
 import { onMounted } from "vue";
 import { reactive } from "vue";
 
-const posts = reactive({
-  id: 0,
-  description: "",
-  user_id: 0,
-  created_at: "",
-});
+// let posts = reactive([
+//   {
+//     id: 0,
+//     description: "",
+//     user_id: 0,
+//     created_at: "",
+//     user: {
+//       id: 0,
+//       name: "",
+//       birthday: "",
+//       phone: "",
+//       email: "",
+//       img: "",
+//     },
+//   },
+// ]);
 
-const postsOwners = reactive({
-  id: 0,
-  name: "",
-  birthday: "",
-  phone: "",
-  email: "",
-  img: "",
-});
+const posts = reactive([]);
 
-const comments = reactive({
-  id: 0,
-  content: "",
-  post_id: 0,
-  created_at: "",
-  user: {
-    id: 0,
-    name: "",
-    birthday: "",
-    phone: "",
-    email: "",
-    img: "",
-  },
-});
+// const comments = reactive([
+//   {
+//     id: 0,
+//     content: "",
+//     post_id: 0,
+//     created_at: "",
+//     user: {
+//       id: 0,
+//       name: "",
+//       birthday: "",
+//       phone: "",
+//       email: "",
+//       img: "",
+//     },
+//   },
+// ]);
 
-const likes = reactive({
-  id: 0,
-  post_id: 0,
-  user_id: 0,
-  user: {
-    id: 0,
-    name: "",
-    birthday: "",
-    phone: "",
-    email: "",
-    img: "",
-  },
-});
+// const likes = reactive([
+//   {
+//     id: 0,
+//     post_id: 0,
+//     user_id: 0,
+//     user: {
+//       id: 0,
+//       name: "",
+//       birthday: "",
+//       phone: "",
+//       email: "",
+//       img: "",
+//     },
+//   },
+// ]);
+
+// const medias = reactive([
+//   {
+//     id: 0,
+//     content: "",
+//     post_id: 0,
+//   },
+// ]);
+
+// const categories = reactive([
+//   {
+//     id: 0,
+//     name: "",
+//   },
+// ]);
 onMounted(async () => {
   await getPosts();
 });
@@ -57,12 +79,16 @@ const getPosts = async () => {
   await axios
     .get(`${url}/posts`)
     .then((res) => {
-      console.log(res.data.data[0].likes);
+      const data = res.data.data;
+      posts.push(...data);
+      //console.log(res.data.data[0].likes);
     })
     .catch((err) => {
       console.log(err);
     });
 };
+
+console.log(posts);
 </script>
 
 <template>
