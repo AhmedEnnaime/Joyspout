@@ -13,17 +13,20 @@ const user = reactive({
   email: "",
   password: "",
   c_password: "",
-  img: fileInput.value[0]?.file,
+  img: null,
 });
 
 const router = useRouter();
 
 const url = "http://localhost:8000/api";
 
-const register = async () => {
-  console.log(user);
-  user.img = fileInput.value[0]?.file;
+const handleImageUpload = (event) => {
+  user.img = event.target.files[0];
+};
 
+const register = async () => {
+  // user.img = fileInput.value[0]?.file;
+  console.log(user);
   await axios
     .post(`${url}/register`, user)
     .then((res) => {
@@ -46,7 +49,12 @@ const register = async () => {
     >
       Joyspout
     </h5>
-    <FormKit type="form" @submit="register" :actions="false">
+    <FormKit
+      type="form"
+      @submit="register"
+      :actions="false"
+      enctype="multipart/form-data"
+    >
       <div class="flex gap-x-4 w-full">
         <div class="w-1/2">
           <FormKit
@@ -103,7 +111,7 @@ const register = async () => {
           name="img"
           id="img"
           label="Image"
-          v-model="fileInput"
+          @change="handleImageUpload"
           placeholder="Upload image"
           validation="required"
         />

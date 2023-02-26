@@ -4,7 +4,7 @@ import { useAuthStore } from "@/stores/auth";
 const user = useAuthStore().state.user;
 
 const getUserImage = (fileName) => {
-  return "http://localhost:8000/uploads/" + fileName;
+  return "http://localhost:8000/storage/" + fileName;
 };
 </script>
 

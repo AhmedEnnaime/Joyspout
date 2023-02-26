@@ -20,7 +20,7 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 const user = useAuthStore().state.user;
 
 const getUserImage = (fileName) => {
-  return "http://localhost:8000/uploads/" + fileName;
+  return "http://localhost:8000/storage/" + fileName;
 };
 const logout = async () => {
   await axios
