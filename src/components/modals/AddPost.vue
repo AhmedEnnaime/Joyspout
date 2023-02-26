@@ -1,12 +1,11 @@
 <script setup>
 import { Modal } from "flowbite-vue";
 import "@formkit/themes/genesis";
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 
 const user = useAuthStore().state.user;
-const fileInput = ref([]);
 
 const post = reactive({
   description: "",
@@ -28,22 +27,33 @@ const props = defineProps({
 });
 const url = "http://localhost:8000/api";
 
-const sharePost = async () => {
-  fileInput.value.forEach((fileItem) => {
-    post.content.push(fileItem.name);
-  });
+const handleImageUpload = (event) => {
+  post.content = event.target.files;
+};
 
-  await axios
-    .post(`${url}/posts`, post)
-    .then((res) => {
-      console.log(res.data);
-      if (res.status === 201) {
-        props.closeModal();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+const sharePost = async () => {
+  const formData = new FormData();
+  formData.append("description", post.description);
+  formData.append("user_id", post.user_id);
+  for (let i of post.category_id) {
+    formData.append("category_id", i);
+  }
+  for (let j of post.content) {
+    formData.append("content", j);
+  }
+  console.log(post);
+
+  // await axios
+  //   .post(`${url}/posts`, formData)
+  //   .then((res) => {
+  //     console.log(res.data);
+  //     if (res.status === 201) {
+  //       props.closeModal();
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 };
 </script>
 
@@ -75,9 +85,9 @@ const sharePost = async () => {
           { label: 'Entertainment', value: 4 },
           { label: 'Education', value: 6 },
           { label: 'Gaming', value: 8 },
-          { label: 'Finance', value: 9 },
-          { label: 'Anime', value: 99 },
-          { label: 'Movies', value: 66 },
+          { label: 'Finance', value: 1 },
+          { label: 'Anime', value: 2 },
+          { label: 'Movies', value: 5 },
         ]"
       />
       <div
@@ -86,7 +96,7 @@ const sharePost = async () => {
         <p>Add to your post</p>
         <FormKit
           name="content[]"
-          v-model="fileInput"
+          @change="handleImageUpload"
           type="file"
           accept=".jpg,.png,.pdf"
           multiple

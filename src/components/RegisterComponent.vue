@@ -1,10 +1,8 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
-
-const fileInput = ref([]);
 
 const user = reactive({
   name: "",
@@ -25,12 +23,17 @@ const handleImageUpload = (event) => {
 };
 
 const register = async () => {
-  // user.img = fileInput.value[0]?.file;
-  console.log(user);
+  const formData = new FormData();
+  formData.append("name", user.name);
+  formData.append("birthday", user.birthday);
+  formData.append("phone", user.phone);
+  formData.append("email", user.email);
+  formData.append("password", user.password);
+  formData.append("c_password", user.c_password);
+  formData.append("img", user.img);
   await axios
-    .post(`${url}/register`, user)
+    .post(`${url}/register`, formData)
     .then((res) => {
-      console.log(res.data);
       if (res.status === 201) {
         router.push("/login");
       }
