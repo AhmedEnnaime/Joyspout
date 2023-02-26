@@ -1,12 +1,15 @@
 <script setup>
 import { Modal } from "flowbite-vue";
 import "@formkit/themes/genesis";
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 
 const user = useAuthStore().state.user;
 
+onMounted(async () => {
+  await getCategories();
+});
 const post = reactive({
   description: "",
   user_id: user?.id,
@@ -31,29 +34,43 @@ const handleImageUpload = (event) => {
   post.content = event.target.files;
 };
 
+const categories = reactive([]);
+
+const getCategories = async () => {
+  await axios
+    .get(`${url}/categories`)
+    .then((res) => {
+      console.log(res.data);
+      const data = res.data.data;
+      categories.push(...data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+console.log(categories);
+
 const sharePost = async () => {
   const formData = new FormData();
   formData.append("description", post.description);
   formData.append("user_id", post.user_id);
-  for (let i of post.category_id) {
-    formData.append("category_id", i);
+  for (let i = 0; i < post.category_id.length; i++) {
+    formData.append(`category_id[${i}]`, post.category_id[i]);
   }
-  for (let j of post.content) {
-    formData.append("content", j);
+  for (let j = 0; j < post.content.length; j++) {
+    formData.append(`content[${j}]`, post.content[j]);
   }
-  console.log(post);
 
-  // await axios
-  //   .post(`${url}/posts`, formData)
-  //   .then((res) => {
-  //     console.log(res.data);
-  //     if (res.status === 201) {
-  //       props.closeModal();
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  await axios
+    .post(`${url}/posts`, formData)
+    .then((res) => {
+      if (res.status === 201) {
+        props.closeModal();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 </script>
 
@@ -119,7 +136,6 @@ const sharePost = async () => {
           Post
         </button>
       </div>
-      <pre wrap="">{{ post }}</pre>
     </template>
   </Modal>
 </template>
