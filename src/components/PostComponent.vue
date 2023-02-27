@@ -3,12 +3,18 @@ import { ref } from "vue";
 import LikesModal from "./modals/LikesModal.vue";
 import CommentsModal from "@/components/modals/CommentsModal.vue";
 import ButtonOptions from "./ButtonOptions.vue";
+import { useAuthStore } from "@/stores/auth";
+import axios from "axios";
+
+const user = useAuthStore().state.user;
 
 const props = defineProps({
   posts: {
     required: true,
   },
 });
+
+const url = "http://localhost:8000/api";
 const getUserImage = (fileName) => {
   return "http://localhost:8000/storage/" + fileName;
 };
@@ -34,10 +40,42 @@ const showModal = () => {
 const closeModal = () => {
   Modal.value = false;
 };
-const toggleLike = () => {
+
+const likePost = async (post_id) => {
+  await axios
+    .post(`${url}/like/${post_id}`)
+    .then((res) => {
+      console.log(res.data);
+      if (res.status === 201) {
+        console.log("success");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const removeLike = async (like_id) => {
+  await axios
+    .delete(`${url}/like/${like_id}`)
+    .then((res) => {
+      console.log(res.data);
+      if (res.status === 202) {
+        console.log("success");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+const toggleLike = (post_id, like_id) => {
   const likes = document.querySelectorAll(".like");
   for (let like of likes) {
-    like.classList.toggle("text-red-600");
+    if (like.classList.contains("text-red-600")) {
+      removeLike(like_id);
+    } else {
+      likePost(post_id);
+    }
   }
 };
 let likes = [];
@@ -55,6 +93,7 @@ const getPostComments = (items) => {
 const getPostLikes = (items) => {
   likes = [...items];
 };
+console.log(user?.id);
 </script>
 
 <template>
@@ -87,6 +126,14 @@ const getPostLikes = (items) => {
         alt="post img"
       />
       <div class="flex gap-x-12 items-center">
+        <!-- <i
+          @click="toggleLike"
+          v-bind:class="
+            post.likes[0].user.id === user?.id
+              ? 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer text-red-600'
+              : 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer'
+          "
+        ></i> -->
         <i
           @click="toggleLike"
           class="like fa-sharp fa-regular fa-heart text-2xl cursor-pointer"

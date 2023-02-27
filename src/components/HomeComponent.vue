@@ -3,7 +3,6 @@ import PostComponent from "./PostComponent.vue";
 import axios from "axios";
 import { onMounted } from "vue";
 import { reactive } from "vue";
-import SuccessModal from "./utils/SuccessModal.vue";
 
 const posts = reactive([]);
 

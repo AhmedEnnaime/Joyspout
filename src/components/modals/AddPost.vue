@@ -4,7 +4,6 @@ import "@formkit/themes/genesis";
 import { reactive, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
-import SuccessModal from "../utils/SuccessModal.vue";
 
 const user = useAuthStore().state.user;
 
