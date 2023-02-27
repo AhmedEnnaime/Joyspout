@@ -1,10 +1,31 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
+import { onMounted, reactive } from "vue";
+import axios from "axios";
 
 const user = useAuthStore().state.user;
 
 const getUserImage = (fileName) => {
   return "http://localhost:8000/storage/" + fileName;
+};
+
+onMounted(async () => {
+  await getPosts();
+});
+
+const posts = reactive([]);
+
+const url = "http://localhost:8000/api";
+const getPosts = async () => {
+  await axios
+    .get(`${url}/posts`)
+    .then((res) => {
+      const data = res.data.data;
+      posts.push(...data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 </script>
 
@@ -34,21 +55,18 @@ const getUserImage = (fileName) => {
         <div
           class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900"
         >
-          8
+          {{ posts.length }}
         </div>
       </div>
-      <div class="flex flex-col px-16 pt-8 pb-6">
-        <h5 class="font-bold pb-2">Joyspout</h5>
-        <p class="pl-4">Socials</p>
+      <div
+        v-for="(post, index) in posts"
+        :key="index"
+        class="flex flex-col px-16 pt-8 pb-6"
+      >
+        <!-- <h5 class="font-bold pb-2">Joyspout</h5>
+        <p class="pl-4">Socials</p> -->
       </div>
-      <div class="flex flex-col px-16 pb-6">
-        <h5 class="font-bold pb-2">Theracure</h5>
-        <p class="pl-4">Medicals / Socials</p>
-      </div>
-      <div class="flex flex-col px-16 pb-6">
-        <h5 class="font-bold pb-2">Nfts</h5>
-        <p class="pl-4">Entertainment</p>
-      </div>
+
       <div class="flex justify-between mt-8 px-8">
         <button class="text-blue-600">view all</button>
       </div>
