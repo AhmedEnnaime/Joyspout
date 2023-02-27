@@ -1,5 +1,15 @@
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+
+const props = defineProps({
+  post_id: {
+    default: null,
+  },
+  comment_id: {
+    default: null,
+  },
+});
+// console.log(props.post_id);
 </script>
 <template>
   <div
@@ -12,7 +22,6 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
         >
           <span class="sr-only">Open options</span>
           <i class="fa-solid fa-ellipsis h-5 w-5" aria-hidden="true"></i>
-          <!-- <DotsVerticalIcon class="h-5 w-5" aria-hidden="true" /> -->
         </MenuButton>
       </div>
 

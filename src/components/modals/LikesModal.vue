@@ -17,7 +17,9 @@ const props = defineProps({
   },
 });
 
-console.log(props.likes);
+const getUserImage = (fileName) => {
+  return "http://localhost:8000/storage/" + fileName;
+};
 </script>
 
 <template>
@@ -37,7 +39,7 @@ console.log(props.likes);
       >
         <img
           class="w-10 h-10 rounded-full"
-          src="@/assets/img/ait elkadi.jpeg"
+          :src="getUserImage(like.user.img)"
           alt="user photo"
         />
         <p>{{ like.user.name }}</p>

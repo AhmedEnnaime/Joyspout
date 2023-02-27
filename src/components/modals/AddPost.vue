@@ -4,6 +4,7 @@ import "@formkit/themes/genesis";
 import { reactive, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
+import SuccessModal from "../utils/SuccessModal.vue";
 
 const user = useAuthStore().state.user;
 
@@ -40,7 +41,6 @@ const getCategories = async () => {
   await axios
     .get(`${url}/categories`)
     .then((res) => {
-      console.log(res.data);
       const data = res.data.data;
       categories.push(...data);
     })

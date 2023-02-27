@@ -40,8 +40,21 @@ const toggleLike = () => {
     like.classList.toggle("text-red-600");
   }
 };
+let likes = [];
+let comments = [];
+let post_id = 0;
 
-console.log(props.posts);
+const getPostId = (id_post) => {
+  post_id = id_post;
+};
+
+const getPostComments = (items) => {
+  comments = [...items];
+};
+
+const getPostLikes = (items) => {
+  likes = [...items];
+};
 </script>
 
 <template>
@@ -60,7 +73,9 @@ console.log(props.posts);
           />
           <p class="font-semibold">{{ post.user.name }}</p>
         </div>
-        <ButtonOptions />
+        <button @click="getPostId(post.id)">
+          <ButtonOptions :post_id="post_id" />
+        </button>
       </div>
 
       <p class="font-normal text-gray-700 dark:text-gray-400">
@@ -77,29 +92,39 @@ console.log(props.posts);
           class="like fa-sharp fa-regular fa-heart text-2xl cursor-pointer"
         ></i>
         <i
-          @click="showCommentsModal"
+          @click="
+            () => {
+              showCommentsModal();
+              getPostComments(post.comments);
+              getPostId(post.id);
+            }
+          "
           class="fa-sharp fa-regular fa-comment text-2xl cursor-pointer"
         ></i>
       </div>
-      <p @click="showModal" class="font-bold cursor-pointer">
+      <p
+        @click="
+          () => {
+            showModal();
+            getPostLikes(post.likes);
+          }
+        "
+        class="font-bold cursor-pointer"
+      >
         {{ post.likes.length }} likes
       </p>
     </div>
+  </div>
+  <div v-if="Modal">
+    <LikesModal :likes="likes" :show-modal="Modal" :close-modal="closeModal" />
+  </div>
 
-    <div v-if="Modal">
-      <LikesModal
-        :likes="post.likes"
-        :show-modal="Modal"
-        :close-modal="closeModal"
-      />
-    </div>
-
-    <div v-if="CommentModal">
-      <CommentsModal
-        :comments="post.comments"
-        :show-modal="CommentModal"
-        :close-modal="closeCommentsModal"
-      />
-    </div>
+  <div v-if="CommentModal">
+    <CommentsModal
+      :show-modal="CommentModal"
+      :close-modal="closeCommentsModal"
+      :comments="comments"
+      :post_id="post_id"
+    />
   </div>
 </template>
