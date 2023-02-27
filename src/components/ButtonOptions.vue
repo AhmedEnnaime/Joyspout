@@ -9,7 +9,7 @@ const props = defineProps({
     default: null,
   },
 });
-// console.log(props.post_id);
+console.log(props.post_id);
 </script>
 <template>
   <div

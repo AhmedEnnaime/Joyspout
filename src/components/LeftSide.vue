@@ -2,9 +2,13 @@
 import { useAuthStore } from "@/stores/auth";
 import { onMounted, reactive } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 
 const user = useAuthStore().state.user;
-
+const router = useRouter();
+const navigate = () => {
+  router.push("/profile");
+};
 const getUserImage = (fileName) => {
   return "http://localhost:8000/storage/" + fileName;
 };
@@ -33,7 +37,7 @@ const getPosts = async () => {
   <div
     class="h-3/5 mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
   >
-    <div class="flex items-center py-4 px-10">
+    <div @click="navigate" class="flex items-center py-4 px-10 cursor-pointer">
       <img
         class="w-16 h-22 mb-3 rounded-full shadow-lg"
         :src="getUserImage(user?.img)"
@@ -58,13 +62,19 @@ const getPosts = async () => {
           {{ posts.length }}
         </div>
       </div>
-      <div
-        v-for="(post, index) in posts"
-        :key="index"
-        class="flex flex-col px-16 pt-8 pb-6"
-      >
-        <!-- <h5 class="font-bold pb-2">Joyspout</h5>
-        <p class="pl-4">Socials</p> -->
+      <div class="flex flex-col px-16 pt-8">
+        <h5 class="font-bold pb-2">Joyspout</h5>
+        <p class="pl-4">Socials</p>
+      </div>
+
+      <div class="flex flex-col px-16 pt-8">
+        <h5 class="font-bold pb-2">Joyspout</h5>
+        <p class="pl-4">Socials</p>
+      </div>
+
+      <div class="flex flex-col px-16 pt-8">
+        <h5 class="font-bold pb-2">Joyspout</h5>
+        <p class="pl-4">Socials</p>
       </div>
 
       <div class="flex justify-between mt-8 px-8">

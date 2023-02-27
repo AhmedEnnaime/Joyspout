@@ -72,19 +72,21 @@ const toggleLike = (post_id, like_id) => {
   const likes = document.querySelectorAll(".like");
   for (let like of likes) {
     if (like.classList.contains("text-red-600")) {
-      removeLike(like_id);
+      console.log("liked");
+      //removeLike(like_id);
     } else {
-      likePost(post_id);
+      console.log("not liked");
+      //likePost(post_id);
     }
   }
 };
 let likes = [];
 let comments = [];
-let post_id = 0;
+// let post_id = ref(0);
 
-const getPostId = (id_post) => {
-  post_id = id_post;
-};
+// const getPostId = (id_post) => {
+//   post_id.value = id_post;
+// };
 
 const getPostComments = (items) => {
   comments = [...items];
@@ -112,9 +114,8 @@ console.log(user?.id);
           />
           <p class="font-semibold">{{ post.user.name }}</p>
         </div>
-        <button @click="getPostId(post.id)">
-          <ButtonOptions :post_id="post_id" />
-        </button>
+
+        <ButtonOptions v-if="user.id === post.user.id" :post_id="post.id" />
       </div>
 
       <p class="font-normal text-gray-700 dark:text-gray-400">
@@ -128,8 +129,10 @@ console.log(user?.id);
       <div class="flex gap-x-12 items-center">
         <!-- <i
           @click="toggleLike"
+          v-for="(like, index) in post.likes"
+          :key="index"
           v-bind:class="
-            post.likes[0].user.id === user?.id
+            like.user.id === user?.id
               ? 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer text-red-600'
               : 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer'
           "

@@ -9,7 +9,7 @@ const router = useRouter();
 const user = useAuthStore();
 
 const getUserImage = (fileName) => {
-  return "http://localhost:8000/uploads/" + fileName;
+  return "http://localhost:8000/storage/" + fileName;
 };
 
 onMounted(async () => {
@@ -18,6 +18,7 @@ onMounted(async () => {
   }
   await user.getAuthUser();
 });
+
 const myArr = user.state.user?.created_at.split("T");
 let created_at = myArr[0];
 </script>
