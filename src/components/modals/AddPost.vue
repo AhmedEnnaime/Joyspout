@@ -4,6 +4,7 @@ import "@formkit/themes/genesis";
 import { reactive, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
+import { label } from "@formkit/inputs";
 
 const user = useAuthStore().state.user;
 
@@ -90,22 +91,19 @@ const sharePost = async () => {
         type="textarea"
         v-model="post.description"
         validation="required"
-        placeholder="What's on your mind Samir ?"
+        :placeholder="`What's on your mind ${user?.name} ?`"
       />
       <FormKit
         name="category_id"
         type="checkbox"
         validation="required"
         v-model="post.category_id"
-        :options="[
-          { label: 'Socials', value: 3 },
-          { label: 'Entertainment', value: 4 },
-          { label: 'Education', value: 6 },
-          { label: 'Gaming', value: 8 },
-          { label: 'Finance', value: 1 },
-          { label: 'Anime', value: 2 },
-          { label: 'Movies', value: 5 },
-        ]"
+        :options="
+          categories.map((category) => ({
+            label: category.name,
+            value: category.id,
+          }))
+        "
       />
       <div
         class="flex justify-between items-center p-4 border-2 border-gray-200 rounded-md"

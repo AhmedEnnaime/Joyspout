@@ -12,7 +12,13 @@ const props = defineProps({
     required: true,
     type: Function,
   },
+  comments: {
+    required: true,
+    type: Array,
+  },
 });
+
+console.log(props.comments);
 </script>
 
 <template>

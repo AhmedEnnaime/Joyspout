@@ -11,7 +11,13 @@ const props = defineProps({
     required: true,
     type: Function,
   },
+  likes: {
+    required: true,
+    type: Array,
+  },
 });
+
+console.log(props.likes);
 </script>
 
 <template>
@@ -24,40 +30,17 @@ const props = defineProps({
       <div class="flex items-center text-lg">Likes</div>
     </template>
     <template #body>
-      <div class="flex items-center gap-x-4 pb-4">
+      <div
+        v-for="(like, index) in props.likes"
+        :key="index"
+        class="flex items-center gap-x-4 pb-4"
+      >
         <img
           class="w-10 h-10 rounded-full"
           src="@/assets/img/ait elkadi.jpeg"
           alt="user photo"
         />
-        <p>Samir Ait elkadi</p>
-      </div>
-
-      <div class="flex items-center gap-x-4 pb-4">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="@/assets/img/ait elkadi.jpeg"
-          alt="user photo"
-        />
-        <p>Samir Ait elkadi</p>
-      </div>
-
-      <div class="flex items-center gap-x-4 pb-4">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="@/assets/img/ait elkadi.jpeg"
-          alt="user photo"
-        />
-        <p>Samir Ait elkadi</p>
-      </div>
-
-      <div class="flex items-center gap-x-4 pb-4">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="@/assets/img/ait elkadi.jpeg"
-          alt="user photo"
-        />
-        <p>Samir Ait elkadi</p>
+        <p>{{ like.user.name }}</p>
       </div>
     </template>
   </Modal>

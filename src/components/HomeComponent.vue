@@ -81,24 +81,15 @@ const getPosts = async () => {
     .then((res) => {
       const data = res.data.data;
       posts.push(...data);
-      //console.log(res.data.data[0].likes);
     })
     .catch((err) => {
       console.log(err);
     });
 };
-
-console.log(posts);
 </script>
 
 <template>
   <div class="w-full flex flex-col items-center gap-y-4 max-h-full">
-    <PostComponent />
-    <PostComponent />
-    <PostComponent />
-    <PostComponent />
-    <PostComponent />
-    <PostComponent />
-    <PostComponent />
+    <PostComponent :posts="posts" />
   </div>
 </template>
