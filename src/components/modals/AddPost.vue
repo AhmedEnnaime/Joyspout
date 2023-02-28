@@ -4,8 +4,10 @@ import "@formkit/themes/genesis";
 import { reactive, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
+import { usePostStore } from "@/stores/post";
 
 const user = useAuthStore().state.user;
+const selectedPost = usePostStore();
 
 onMounted(async () => {
   await getCategories();
@@ -47,7 +49,6 @@ const getCategories = async () => {
       console.log(err);
     });
 };
-console.log(categories);
 
 const sharePost = async () => {
   const formData = new FormData();
@@ -115,21 +116,25 @@ const sharePost = async () => {
           multiple
           id="attachment"
         />
-        <!-- <label for="attachment">
-          <i
-            class="fa-sharp fa-solid fa-paperclip text-yellow-300 text-2xl cursor-pointer"
-          ></i>
-        </label> -->
       </div>
     </template>
     <template #footer>
       <div class="flex w-full">
         <button
+          v-if="!selectedPost.state.post?.id"
           @click="sharePost"
           type="submit"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full"
         >
           Post
+        </button>
+
+        <button
+          v-else
+          type="submit"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full"
+        >
+          Update Post
         </button>
       </div>
     </template>

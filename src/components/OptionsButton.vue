@@ -1,30 +1,19 @@
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { usePostStore } from "@/stores/post";
+import { useCommentStore } from "@/stores/comment";
 import axios from "axios";
-import AddPost from "./modals/AddPost.vue";
-import { ref } from "vue";
 
-const post = usePostStore();
-
-const Modal = ref(false);
-
-const showModal = () => {
-  Modal.value = true;
-};
-
-const closeModal = () => {
-  Modal.value = false;
-};
+const comment = useCommentStore();
 
 const url = "http://localhost:8000/api";
-const deletePost = async () => {
+
+const deleteComment = async () => {
   await axios
-    .delete(`${url}/posts/${post.state.post?.id}`)
+    .delete(`${url}/comment/${comment.state.comment?.id}`)
     .then((res) => {
       console.log(res.data);
       if (res.status === 202) {
-        post.clearPost();
+        comment.clearComment();
       }
     })
     .catch((err) => {
@@ -60,7 +49,7 @@ const deletePost = async () => {
           <div class="py-1">
             <MenuItem v-slot="{ active }">
               <a
-                @click="showModal"
+                href="#"
                 :class="[
                   active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                   'flex justify-between px-4 py-2 text-sm',
@@ -72,12 +61,12 @@ const deletePost = async () => {
 
             <MenuItem v-slot="{ active }">
               <button
+                @click="deleteComment"
                 type="button"
                 :class="[
                   active ? 'bg-gray-100 text-red-600' : 'text-gray-700',
                   'w-full flex justify-between px-4 py-2 text-sm',
                 ]"
-                @click="deletePost"
               >
                 <span>Delete</span>
               </button>
@@ -86,8 +75,5 @@ const deletePost = async () => {
         </MenuItems>
       </transition>
     </Menu>
-  </div>
-  <div v-if="Modal">
-    <AddPost :show-modal="Modal" :close-modal="closeModal" />
   </div>
 </template>

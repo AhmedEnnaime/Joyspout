@@ -2,9 +2,10 @@
 import { ref } from "vue";
 import AddPost from "./modals/AddPost.vue";
 import { useAuthStore } from "@/stores/auth";
+import { usePostStore } from "@/stores/post";
 
 const user = useAuthStore().state.user;
-
+const post = usePostStore();
 const getUserImage = (fileName) => {
   return "http://localhost:8000/storage/" + fileName;
 };
@@ -34,7 +35,12 @@ const closeModal = () => {
           type="text"
           id="default-input"
           :placeholder="`What's on your mind, ${user?.name} ?`"
-          :onfocus="showModal"
+          :onfocus="
+            () => {
+              showModal();
+              post.clearPost();
+            }
+          "
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>

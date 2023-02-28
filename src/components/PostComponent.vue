@@ -4,10 +4,11 @@ import LikesModal from "./modals/LikesModal.vue";
 import CommentsModal from "@/components/modals/CommentsModal.vue";
 import ButtonOptions from "./ButtonOptions.vue";
 import { useAuthStore } from "@/stores/auth";
+import { usePostStore } from "@/stores/post";
 import axios from "axios";
 
 const user = useAuthStore().state.user;
-
+const selectedPost = usePostStore();
 const props = defineProps({
   posts: {
     required: true,
@@ -82,11 +83,12 @@ const toggleLike = (post_id, like_id) => {
 };
 let likes = [];
 let comments = [];
-// let post_id = ref(0);
+let selectedPostId = 0;
 
-// const getPostId = (id_post) => {
-//   post_id.value = id_post;
-// };
+const getPostId = (post_id) => {
+  selectedPostId = post_id;
+  //console.log(selectedPostId);
+};
 
 const getPostComments = (items) => {
   comments = [...items];
@@ -95,7 +97,6 @@ const getPostComments = (items) => {
 const getPostLikes = (items) => {
   likes = [...items];
 };
-console.log(user?.id);
 </script>
 
 <template>
@@ -114,8 +115,9 @@ console.log(user?.id);
           />
           <p class="font-semibold">{{ post.user.name }}</p>
         </div>
-
-        <ButtonOptions v-if="user.id === post.user.id" :post_id="post.id" />
+        <button @click="selectedPost.setPost(post)">
+          <ButtonOptions v-if="user?.id === post.user.id" />
+        </button>
       </div>
 
       <p class="font-normal text-gray-700 dark:text-gray-400">
@@ -174,7 +176,7 @@ console.log(user?.id);
       :show-modal="CommentModal"
       :close-modal="closeCommentsModal"
       :comments="comments"
-      :post_id="post_id"
+      :post_id="selectedPostId"
     />
   </div>
 </template>

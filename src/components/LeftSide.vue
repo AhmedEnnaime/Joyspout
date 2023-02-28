@@ -68,12 +68,8 @@ const getPosts = async () => {
         class="flex flex-col px-8 pt-8"
       >
         <h5 class="font-bold pb-2">{{ post.description }}</h5>
-        <div class="flex items-center">
-          <p
-            v-for="(category, index) in post.categories"
-            :key="index"
-            class="pl-4"
-          >
+        <div class="flex gap-x-2 pl-4 items-center">
+          <p v-for="(category, index) in post.categories" :key="index" class="">
             {{ category.name }}
           </p>
         </div>

@@ -1,11 +1,13 @@
 <script setup>
 import { Modal } from "flowbite-vue";
-import ButtonOptions from "../ButtonOptions.vue";
+import OptionsButton from "../OptionsButton.vue";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 import { ref } from "vue";
+import { useCommentStore } from "@/stores/comment";
 
 const user = useAuthStore().state.user;
+const selectedComment = useCommentStore();
 const content = ref("");
 const props = defineProps({
   showModal: {
@@ -74,10 +76,9 @@ const writeComment = async (post_id) => {
         <div class="flex flex-col p-2 rounded-lg bg-gray-200">
           <div class="flex gap-x-4 items-center">
             <p class="font-bold">{{ comment.user.name }}</p>
-            <ButtonOptions
-              v-if="user.id === comment.user.id"
-              :comment_id="comment.id"
-            />
+            <button @click="selectedComment.setComment(comment.id)">
+              <OptionsButton v-if="user.id === comment.user.id" />
+            </button>
           </div>
           <p class="pl-2">{{ comment.content }}</p>
         </div>
