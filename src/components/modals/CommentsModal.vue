@@ -5,10 +5,14 @@ import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 import { ref } from "vue";
 import { useCommentStore } from "@/stores/comment";
+import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
 
 const user = useAuthStore().state.user;
+const clickedUser = useUserStore();
 const selectedComment = useCommentStore();
 const content = ref("");
+const router = useRouter();
 const props = defineProps({
   showModal: {
     required: true,
@@ -66,7 +70,13 @@ const writeComment = async (post_id) => {
         v-else
         v-for="(comment, index) in props.comments"
         :key="index"
-        class="flex items-center gap-x-4 pb-4"
+        class="flex items-center gap-x-4 pb-4 cursor-pointer"
+        @click="
+          () => {
+            clickedUser.setUser(comment.user);
+            router.push('/profile');
+          }
+        "
       >
         <img
           class="w-10 h-10 rounded-full"

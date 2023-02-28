@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import PostsView from "../views/PostsView.vue";
 import LoginView from "@/views/LoginView.vue";
 import SignupView from "@/views/SignupView.vue";
+import SettingsView from "@/views/SettingsView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 
 const router = createRouter({
@@ -31,6 +32,11 @@ const router = createRouter({
       path: "/register",
       name: "register",
       component: SignupView,
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: SettingsView,
     },
     {
       path: "/profile",

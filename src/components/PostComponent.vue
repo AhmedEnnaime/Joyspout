@@ -6,8 +6,12 @@ import ButtonOptions from "./ButtonOptions.vue";
 import { useAuthStore } from "@/stores/auth";
 import { usePostStore } from "@/stores/post";
 import axios from "axios";
+import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const user = useAuthStore().state.user;
+const clickedUser = useUserStore();
 const selectedPost = usePostStore();
 const props = defineProps({
   posts: {
@@ -107,7 +111,15 @@ const getPostLikes = (items) => {
   >
     <div class="flex flex-col gap-y-6 p-4">
       <div class="flex justify-between items-center">
-        <div class="flex items-center gap-x-4">
+        <div
+          @click="
+            () => {
+              clickedUser.setUser(post.user);
+              router.push('/profile');
+            }
+          "
+          class="flex items-center gap-x-4 cursor-pointer"
+        >
           <img
             class="w-10 h-10 mb-3 rounded-full shadow-lg"
             :src="getUserImage(post.user.img)"

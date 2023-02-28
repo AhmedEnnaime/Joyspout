@@ -22,7 +22,7 @@ const posts = reactive([]);
 const url = "http://localhost:8000/api";
 const getPosts = async () => {
   await axios
-    .get(`${url}/userPosts`)
+    .get(`${url}/authPosts`)
     .then((res) => {
       const data = res.data.data;
       posts.push(...data);

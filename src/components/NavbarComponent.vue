@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { RouterLink } from "vue-router";
+import { useUserStore } from "@/stores/user";
 import {
   Disclosure,
   DisclosureButton,
@@ -18,6 +19,7 @@ const token = sessionStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 const user = useAuthStore().state.user;
+const clickedUser = useUserStore();
 
 const getUserImage = (fileName) => {
   return "http://localhost:8000/storage/" + fileName;
@@ -132,6 +134,17 @@ const logout = async () => {
                       'block px-4 py-2 text-sm text-gray-700 cursor-pointer',
                     ]"
                     >Home</RouterLink
+                  >
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                  <RouterLink
+                    @click="clickedUser.setUser(user)"
+                    to="/settings"
+                    :class="[
+                      active ? 'bg-gray-100' : '',
+                      'block px-4 py-2 text-sm text-gray-700 cursor-pointer',
+                    ]"
+                    >Settings</RouterLink
                   >
                 </MenuItem>
                 <MenuItem v-slot="{ active }">

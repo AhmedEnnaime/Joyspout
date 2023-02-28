@@ -1,6 +1,10 @@
 <script setup>
 import { Modal } from "flowbite-vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 
+const router = useRouter();
+const clickedUser = useUserStore();
 const props = defineProps({
   showModal: {
     required: true,
@@ -35,7 +39,13 @@ const getUserImage = (fileName) => {
       <div
         v-for="(like, index) in props.likes"
         :key="index"
-        class="flex items-center gap-x-4 pb-4"
+        class="flex items-center gap-x-4 pb-4 cursor-pointer"
+        @click="
+          () => {
+            clickedUser.setUser(like.user);
+            router.push('/profile');
+          }
+        "
       >
         <img
           class="w-10 h-10 rounded-full"
