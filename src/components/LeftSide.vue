@@ -22,7 +22,7 @@ const posts = reactive([]);
 const url = "http://localhost:8000/api";
 const getPosts = async () => {
   await axios
-    .get(`${url}/posts`)
+    .get(`${url}/userPosts`)
     .then((res) => {
       const data = res.data.data;
       posts.push(...data);
@@ -35,7 +35,7 @@ const getPosts = async () => {
 
 <template>
   <div
-    class="h-3/5 mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="h-fit mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
   >
     <div @click="navigate" class="flex items-center py-4 px-10 cursor-pointer">
       <img
@@ -62,19 +62,21 @@ const getPosts = async () => {
           {{ posts.length }}
         </div>
       </div>
-      <div class="flex flex-col px-16 pt-8">
-        <h5 class="font-bold pb-2">Joyspout</h5>
-        <p class="pl-4">Socials</p>
-      </div>
-
-      <div class="flex flex-col px-16 pt-8">
-        <h5 class="font-bold pb-2">Joyspout</h5>
-        <p class="pl-4">Socials</p>
-      </div>
-
-      <div class="flex flex-col px-16 pt-8">
-        <h5 class="font-bold pb-2">Joyspout</h5>
-        <p class="pl-4">Socials</p>
+      <div
+        v-for="(post, index) in posts"
+        :key="index"
+        class="flex flex-col px-8 pt-8"
+      >
+        <h5 class="font-bold pb-2">{{ post.description }}</h5>
+        <div class="flex items-center">
+          <p
+            v-for="(category, index) in post.categories"
+            :key="index"
+            class="pl-4"
+          >
+            {{ category.name }}
+          </p>
+        </div>
       </div>
 
       <div class="flex justify-between mt-8 px-8">
