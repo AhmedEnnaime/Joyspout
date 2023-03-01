@@ -22,7 +22,6 @@ const deletePost = async () => {
   await axios
     .delete(`${url}/posts/${post.state.post?.id}`)
     .then((res) => {
-      console.log(res.data);
       if (res.status === 202) {
         post.clearPost();
       }

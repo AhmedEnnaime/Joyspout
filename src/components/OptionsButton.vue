@@ -11,7 +11,6 @@ const deleteComment = async () => {
   await axios
     .delete(`${url}/comment/${comment.state.comment?.id}`)
     .then((res) => {
-      console.log(res.data);
       if (res.status === 202) {
         comment.clearComment();
       }

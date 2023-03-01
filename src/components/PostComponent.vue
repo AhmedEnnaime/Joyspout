@@ -77,11 +77,11 @@ const toggleLike = (post_id, like_id) => {
   const likes = document.querySelectorAll(".like");
   for (let like of likes) {
     if (like.classList.contains("text-red-600")) {
-      console.log("liked");
-      //removeLike(like_id);
+      like.classList.remove("text-red-600");
+      removeLike(like_id);
     } else {
-      console.log("not liked");
-      //likePost(post_id);
+      like.classList.add("text-red-600");
+      likePost(post_id);
     }
   }
 };
@@ -91,7 +91,6 @@ let selectedPostId = 0;
 
 const getPostId = (post_id) => {
   selectedPostId = post_id;
-  //console.log(selectedPostId);
 };
 
 const getPostComments = (items) => {
@@ -141,11 +140,20 @@ const getPostLikes = (items) => {
         alt="post img"
       />
       <div class="flex gap-x-12 items-center">
+        <button v-if="post.likes.length == 0">
+          <i
+            @click="toggleLike(post.id, 0)"
+            class="like fa-sharp fa-regular fa-heart text-2xl cursor-pointer"
+          ></i>
+        </button>
+
         <i
-          @click="toggleLike"
+          v-else
+          v-for="(like, index) in post.likes"
           :key="index"
+          @click="toggleLike(post.id, like.id)"
           v-bind:class="
-            post.likes[0]?.user?.id === user?.id
+            like?.user?.id === user?.id
               ? 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer text-red-600'
               : 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer'
           "
