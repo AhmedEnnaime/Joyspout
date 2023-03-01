@@ -3,8 +3,10 @@ import { useAuthStore } from "@/stores/auth";
 import { onMounted, reactive } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 
 const user = useAuthStore().state.user;
+const clickedUser = useUserStore();
 const router = useRouter();
 const navigate = () => {
   router.push("/profile");
@@ -62,7 +64,11 @@ const getPosts = async () => {
           {{ posts.length }}
         </div>
       </div>
+      <div v-if="posts.length == 0">
+        <img src="@/assets/img/no-results.png" alt="no-results" />
+      </div>
       <div
+        v-else
         v-for="(post, index) in posts"
         :key="index"
         class="flex flex-col px-8 pt-8"
@@ -76,7 +82,17 @@ const getPosts = async () => {
       </div>
 
       <div class="flex justify-between mt-8 px-8">
-        <button class="text-blue-600">view all</button>
+        <button
+          @click="
+            () => {
+              clickedUser.setUser(user);
+              router.push('/profile');
+            }
+          "
+          class="text-blue-600"
+        >
+          view all
+        </button>
       </div>
     </div>
   </div>

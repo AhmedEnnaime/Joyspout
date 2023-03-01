@@ -18,7 +18,6 @@ const getPosts = async () => {
   await axios
     .get(`${url}/profile/${user.state.user?.id}`)
     .then((res) => {
-      console.log(res.data);
       const data = res.data.data;
       posts.push(...data);
     })

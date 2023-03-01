@@ -5,7 +5,9 @@ import { reactive, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 import { usePostStore } from "@/stores/post";
+import { useSuccessStore } from "@/stores/success";
 
+const success = useSuccessStore();
 const user = useAuthStore().state.user;
 const selectedPost = usePostStore();
 
@@ -66,6 +68,7 @@ const sharePost = async () => {
     .then((res) => {
       if (res.status === 201) {
         props.closeModal();
+        success.setSuccess(true);
       }
     })
     .catch((err) => {

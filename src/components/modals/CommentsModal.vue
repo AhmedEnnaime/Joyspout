@@ -63,8 +63,8 @@ const writeComment = async (post_id) => {
       <div class="flex items-center text-lg">Comments</div>
     </template>
     <template #body>
-      <div v-if="!props.comments">
-        <h1>No comments</h1>
+      <div v-if="props.comments.length == 0">
+        <h1 class="text-center text-2xl">No comments available</h1>
       </div>
       <div
         v-else

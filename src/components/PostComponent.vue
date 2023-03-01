@@ -141,20 +141,19 @@ const getPostLikes = (items) => {
         alt="post img"
       />
       <div class="flex gap-x-12 items-center">
-        <!-- <i
+        <i
           @click="toggleLike"
-          v-for="(like, index) in post.likes"
           :key="index"
           v-bind:class="
-            like.user.id === user?.id
+            post.likes[0]?.user?.id === user?.id
               ? 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer text-red-600'
               : 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer'
           "
-        ></i> -->
-        <i
+        ></i>
+        <!-- <i
           @click="toggleLike"
           class="like fa-sharp fa-regular fa-heart text-2xl cursor-pointer"
-        ></i>
+        ></i> -->
         <i
           @click="
             () => {
