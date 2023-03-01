@@ -71,14 +71,14 @@ const writeComment = async (post_id) => {
         v-for="(comment, index) in props.comments"
         :key="index"
         class="flex items-center gap-x-4 pb-4 cursor-pointer"
-        @click="
-          () => {
-            clickedUser.setUser(comment.user);
-            router.push('/profile');
-          }
-        "
       >
         <img
+          @click="
+            () => {
+              clickedUser.setUser(comment.user);
+              router.push('/profile');
+            }
+          "
           class="w-10 h-10 rounded-full"
           :src="getUserImage(comment.user.img)"
           alt="user photo"

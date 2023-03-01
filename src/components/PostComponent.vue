@@ -50,9 +50,8 @@ const likePost = async (post_id) => {
   await axios
     .post(`${url}/like/${post_id}`)
     .then((res) => {
-      console.log(res.data);
       if (res.status === 201) {
-        console.log("success");
+        router.push("/");
       }
     })
     .catch((err) => {
@@ -64,25 +63,24 @@ const removeLike = async (like_id) => {
   await axios
     .delete(`${url}/like/${like_id}`)
     .then((res) => {
-      console.log(res.data);
       if (res.status === 202) {
-        console.log("success");
+        router.push("/");
       }
     })
     .catch((err) => {
       console.log(err);
     });
 };
-const toggleLike = (post_id, like_id) => {
-  const likes = document.querySelectorAll(".like");
-  for (let like of likes) {
-    if (like.classList.contains("text-red-600")) {
-      like.classList.remove("text-red-600");
-      removeLike(like_id);
-    } else {
-      like.classList.add("text-red-600");
-      likePost(post_id);
-    }
+const hasLikedPost = (post) => {
+  return post.likes.some((like) => like?.user?.id === user?.id);
+};
+const toggleLike = (e, post_id, like_id) => {
+  if (e.target.classList.contains("text-red-600")) {
+    e.target.classList.remove("text-red-600");
+    removeLike(like_id);
+  } else {
+    e.target.classList.add("text-red-600");
+    likePost(post_id);
   }
 };
 let likes = [];
@@ -140,28 +138,19 @@ const getPostLikes = (items) => {
         alt="post img"
       />
       <div class="flex gap-x-12 items-center">
-        <button v-if="post.likes.length == 0">
-          <i
-            @click="toggleLike(post.id, 0)"
-            class="like fa-sharp fa-regular fa-heart text-2xl cursor-pointer"
-          ></i>
-        </button>
-
         <i
-          v-else
-          v-for="(like, index) in post.likes"
-          :key="index"
-          @click="toggleLike(post.id, like.id)"
-          v-bind:class="
-            like?.user?.id === user?.id
-              ? 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer text-red-600'
-              : 'like fa-sharp fa-regular fa-heart text-2xl cursor-pointer'
+          @click="
+            toggleLike(
+              $event,
+              post.id,
+              hasLikedPost(post)
+                ? post.likes.find((like) => like?.user?.id === user?.id).id
+                : 0
+            )
           "
-        ></i>
-        <!-- <i
-          @click="toggleLike"
           class="like fa-sharp fa-regular fa-heart text-2xl cursor-pointer"
-        ></i> -->
+          :class="{ 'text-red-600': hasLikedPost(post) }"
+        ></i>
         <i
           @click="
             () => {
