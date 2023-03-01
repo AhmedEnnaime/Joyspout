@@ -86,7 +86,7 @@ const writeComment = async (post_id) => {
         <div class="flex flex-col p-2 rounded-lg bg-gray-200">
           <div class="flex gap-x-4 items-center">
             <p class="font-bold">{{ comment.user.name }}</p>
-            <button @click="selectedComment.setComment(comment.id)">
+            <button @click="selectedComment.setComment(comment)">
               <OptionsButton v-if="user.id === comment.user.id" />
             </button>
           </div>
