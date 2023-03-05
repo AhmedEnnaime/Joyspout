@@ -1,11 +1,11 @@
-<script setup>
+<!-- <script setup>
 import { ref } from "vue";
 import { useSearch } from "@/components/useSearch";
 
 const url = "http://localhost:8000/api";
 const userName = ref("");
 const searchResults = useSearch(userName, url);
-</script>
+</script> -->
 
 <template>
   <div class="lg:w-2/4 sm:ml-6 sm:flex sm:space-x-8">
@@ -27,7 +27,6 @@ const searchResults = useSearch(userName, url);
             <input
               id="search"
               name="search"
-              v-model="userName"
               class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder="Search"
               type="search"
@@ -37,10 +36,4 @@ const searchResults = useSearch(userName, url);
       </div>
     </div>
   </div>
-  <ul>
-    <li v-for="result in searchResults.results" :key="result.id">
-      {{ result.name }}
-    </li>
-  </ul>
-  <div v-if="searchResults.loading">Loading...</div>
 </template>
