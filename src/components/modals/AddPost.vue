@@ -11,9 +11,6 @@ const success = useSuccessStore();
 const user = useAuthStore().state.user;
 const selectedPost = usePostStore();
 
-onMounted(async () => {
-  await getCategories();
-});
 const post = reactive({
   description: "",
   user_id: user?.id,
@@ -32,6 +29,18 @@ const props = defineProps({
     type: Function,
   },
 });
+
+onMounted(async () => {
+  await getCategories();
+
+  if (selectedPost.state.post?.id) {
+    post.description = selectedPost.state.post?.description;
+    post.category_id = selectedPost.state.post?.categories.map(
+      (category) => category.id
+    );
+  }
+});
+
 const url = "http://localhost:8000/api";
 
 const handleImageUpload = (event) => {
@@ -63,17 +72,32 @@ const sharePost = async () => {
     formData.append(`content[${j}]`, post.content[j]);
   }
 
-  await axios
-    .post(`${url}/posts`, formData)
-    .then((res) => {
-      if (res.status === 201) {
-        props.closeModal();
-        success.setSuccess(true);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (selectedPost.state.post?.id) {
+    await axios
+      .put(`${url}/posts/${selectedPost.state.post.id}`, formData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.status === 200) {
+          props.closeModal();
+          success.setSuccess(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    await axios
+      .post(`${url}/posts`, formData)
+      .then((res) => {
+        if (res.status === 201) {
+          props.closeModal();
+          success.setSuccess(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
 </script>
 
@@ -134,6 +158,7 @@ const sharePost = async () => {
 
         <button
           v-else
+          @click="sharePost"
           type="submit"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full"
         >
