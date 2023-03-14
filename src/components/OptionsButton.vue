@@ -47,18 +47,6 @@ const deleteComment = async () => {
         >
           <div class="py-1">
             <MenuItem v-slot="{ active }">
-              <a
-                href="#"
-                :class="[
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                  'flex justify-between px-4 py-2 text-sm',
-                ]"
-              >
-                <span>Edit</span>
-              </a>
-            </MenuItem>
-
-            <MenuItem v-slot="{ active }">
               <button
                 @click="deleteComment"
                 type="button"

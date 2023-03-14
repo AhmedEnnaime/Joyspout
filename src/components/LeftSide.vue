@@ -69,11 +69,14 @@ const getPosts = async () => {
       </div>
       <div
         v-else
-        v-for="(post, index) in posts"
+        v-for="(post, index) in posts.slice(0, 3)"
         :key="index"
         class="flex flex-col px-8 pt-8"
       >
-        <h5 class="font-bold pb-2">{{ post.description }}</h5>
+        <h5 class="font-bold pb-2">
+          {{ post.description.split(" ").slice(0, 5).join(" ") }}
+          {{ post.description.split(" ").length > 5 ? "..." : "" }}
+        </h5>
         <div class="flex gap-x-2 pl-4 items-center">
           <p v-for="(category, index) in post.categories" :key="index" class="">
             {{ category.name }}

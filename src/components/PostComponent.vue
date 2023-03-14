@@ -27,6 +27,9 @@ const getUserImage = (fileName) => {
 const getPostImage = (fileName) => {
   return "http://localhost:8000/storage/" + fileName;
 };
+
+const posts = ref(props.posts);
+
 const Modal = ref(false);
 const CommentModal = ref(false);
 
@@ -47,62 +50,67 @@ const closeModal = () => {
 };
 
 const likePost = async (post_id) => {
-  await axios
-    .post(`${url}/like/${post_id}`)
-    .then((res) => {
-      if (res.status === 201) {
-        router.push("/");
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  try {
+    const res = await axios.post(`${url}/like/${post_id}`);
+    if (res.status === 201) {
+      const updatedPost = posts.value.find((post) => post.id === post_id);
+      updatedPost.likes.push(res.data.like);
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const removeLike = async (like_id) => {
-  await axios
-    .delete(`${url}/like/${like_id}`)
-    .then((res) => {
-      if (res.status === 202) {
-        router.push("/");
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  try {
+    const res = await axios.delete(`${url}/like/${like_id}`);
+    if (res.status === 202) {
+      const updatedPost = posts.value.find((post) =>
+        post.likes.some((like) => like.id === like_id)
+      );
+      updatedPost.likes = updatedPost.likes.filter(
+        (like) => like.id !== like_id
+      );
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
+
 const hasLikedPost = (post) => {
   return post.likes.some((like) => like?.user?.id === user?.id);
 };
-const toggleLike = (e, post_id, like_id) => {
+
+const toggleLike = async (e, post_id, like_id) => {
   if (e.target.classList.contains("text-red-600")) {
     e.target.classList.remove("text-red-600");
-    removeLike(like_id);
+    await removeLike(like_id);
   } else {
     e.target.classList.add("text-red-600");
-    likePost(post_id);
+    await likePost(post_id);
   }
 };
-let likes = [];
-let comments = [];
-let selectedPostId = 0;
+
+const likes = ref([]);
+const comments = ref([]);
+const selectedPostId = ref(0);
 
 const getPostId = (post_id) => {
-  selectedPostId = post_id;
+  selectedPostId.value = post_id;
 };
 
 const getPostComments = (items) => {
-  comments = [...items];
+  comments.value = [...items];
 };
 
 const getPostLikes = (items) => {
-  likes = [...items];
+  likes.value = [...items];
 };
 </script>
 
 <template>
   <div
-    v-for="(post, index) in props.posts"
+    v-for="(post, index) in posts"
     :key="index"
     class="block max-w-full w-3/4 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
