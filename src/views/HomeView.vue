@@ -3,7 +3,7 @@ import NavbarComponent from "@/components/NavbarComponent.vue";
 import LeftSide from "@/components/LeftSide.vue";
 import HomeComponent from "@/components/HomeComponent.vue";
 import SharePost from "@/components/SharePost.vue";
-// import axios from "axios";
+import FilterBar from "@/components/FilterBar.vue";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
@@ -26,6 +26,7 @@ onMounted(async () => {
     <div class="flex w-full px-10 mt-10 max-h-screen h-screen">
       <LeftSide />
       <div class="flex flex-col w-full gap-y-12 h-4/5 mt-12 overflow-y-scroll">
+        <FilterBar />
         <SharePost />
         <HomeComponent />
       </div>
