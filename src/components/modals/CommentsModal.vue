@@ -64,7 +64,7 @@ const writeComment = async (post_id) => {
     </template>
     <template #body>
       <div v-if="props.comments.length == 0">
-        <h1 class="text-center text-2xl">No comments available</h1>
+        <h1 class="text-center text-2xl">No comments available yet</h1>
       </div>
       <div
         v-else

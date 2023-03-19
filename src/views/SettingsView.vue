@@ -32,11 +32,7 @@ let created_at = myArr[0];
           <div
             class="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x"
           >
-            <form
-              class="divide-y divide-gray-200 lg:col-span-9"
-              action="#"
-              method="POST"
-            >
+            <form class="divide-y divide-gray-200 lg:col-span-9" method="POST">
               <!-- Profile section -->
               <div class="py-6 px-4 sm:p-6 lg:pb-8">
                 <div>

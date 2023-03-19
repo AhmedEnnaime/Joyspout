@@ -59,7 +59,10 @@ const logout = async () => {
         <div
           class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
         >
-          <div class="flex-shrink-0 flex items-center">
+          <div
+            @click="router.push('/')"
+            class="flex-shrink-0 flex items-center cursor-pointer"
+          >
             <img
               class="block lg:hidden h-8 w-auto"
               src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"

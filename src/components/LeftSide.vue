@@ -37,7 +37,7 @@ const getPosts = async () => {
 
 <template>
   <div
-    class="h-fit mt-16 mx-12 w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="h-fit mt-16 mx-2 w-1/4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
   >
     <div @click="navigate" class="flex items-center py-4 px-10 cursor-pointer">
       <img

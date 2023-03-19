@@ -36,6 +36,9 @@ const getUserImage = (fileName) => {
       <div class="flex items-center text-lg">Likes</div>
     </template>
     <template #body>
+      <div v-if="props.likes.length == 0">
+        <h1 class="text-center text-2xl">No likes available yet</h1>
+      </div>
       <div
         v-for="(like, index) in props.likes"
         :key="index"

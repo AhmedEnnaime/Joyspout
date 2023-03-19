@@ -79,7 +79,6 @@ const getUserImage = (fileName) => {
             for="desktop-user-photo"
             class="absolute inset-0 w-full h-full bg-opacity-75 flex items-center justify-center text-sm font-medium text-white opacity-0 hover:opacity-100 focus-within:opacity-100"
           >
-            <span>Change</span>
             <span class="sr-only"> user photo</span>
             <input
               type="file"
