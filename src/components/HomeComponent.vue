@@ -1,13 +1,14 @@
 <script setup>
 import PostComponent from "./PostComponent.vue";
 import axios from "axios";
-import { onMounted } from "vue";
-import { reactive } from "vue";
+import { onMounted, computed, reactive } from "vue";
 import { useSuccessStore } from "@/stores/success";
 import SuccessModal from "./utils/SuccessModal.vue";
+import { useCategoriesStore } from "@/stores/categories";
 
 const posts = reactive([]);
 const success = useSuccessStore();
+const categories = useCategoriesStore();
 
 onMounted(async () => {
   await getPosts();
@@ -25,6 +26,17 @@ const getPosts = async () => {
       console.log(err);
     });
 };
+
+const filteredPosts = computed(() => {
+  if (categories.state.categories?.length === 0) {
+    return posts;
+  } else {
+    return posts.filter((post) =>
+      categories.state.categories.includes(post.categories[0].id)
+    );
+  }
+});
+console.log(filteredPosts);
 </script>
 
 <template>
@@ -32,6 +44,6 @@ const getPosts = async () => {
     <SuccessModal />
   </div>
   <div class="w-full flex flex-col items-center gap-y-4 max-h-full">
-    <PostComponent :posts="posts" />
+    <PostComponent :posts="filteredPosts" />
   </div>
 </template>

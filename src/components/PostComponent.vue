@@ -27,7 +27,7 @@ const getUserImage = (fileName) => {
 const getPostImage = (fileName) => {
   return "http://localhost:8000/storage/" + fileName;
 };
-
+console.log(props.posts);
 const posts = ref(props.posts);
 
 const Modal = ref(false);

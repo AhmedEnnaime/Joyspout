@@ -1,10 +1,14 @@
 <script setup>
 import axios from "axios";
 import { reactive, ref, onMounted } from "vue";
+import { useCategoriesStore } from "@/stores/categories";
+import { storeToRefs } from "pinia";
 
 onMounted(async () => {
   await getCategories();
 });
+
+const selectedCategories = useCategoriesStore();
 const categories = reactive([]);
 const url = "http://localhost:8000/api";
 const getCategories = async () => {
@@ -20,7 +24,7 @@ const getCategories = async () => {
 };
 
 const categories_id = ref([]);
-console.log(categories_id);
+selectedCategories.setCategories(categories_id);
 </script>
 
 <template>
