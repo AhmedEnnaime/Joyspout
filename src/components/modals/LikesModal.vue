@@ -52,10 +52,10 @@ const getUserImage = (fileName) => {
       >
         <img
           class="w-10 h-10 rounded-full"
-          :src="getUserImage(like.user.img)"
+          :src="getUserImage(like?.user?.img)"
           alt="user photo"
         />
-        <p>{{ like.user.name }}</p>
+        <p>{{ like?.user?.name }}</p>
       </div>
     </template>
   </Modal>
