@@ -74,12 +74,11 @@ const sharePost = async () => {
 
   if (selectedPost.state.post?.id) {
     await axios
-      .put(`${url}/posts/${selectedPost.state.post.id}`, formData)
+      .post(`${url}/editPost/${selectedPost.state.post.id}`, formData)
       .then((res) => {
         console.log(res.data);
         if (res.status === 200) {
           props.closeModal();
-          success.setSuccess(true);
         }
       })
       .catch((err) => {

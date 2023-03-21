@@ -42,7 +42,6 @@ const filteredPosts = computed(() => {
 watch(
   () => categories.state.categories,
   () => {
-    // The selected categories have changed, so update the filtered posts
     if (categories.state.categories?.length === 0) {
       posts.forEach((post) => (post.display = true));
     } else {
@@ -54,7 +53,6 @@ watch(
     }
   }
 );
-console.log("ll");
 console.log(filteredPosts);
 </script>
 
