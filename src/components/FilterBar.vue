@@ -2,7 +2,7 @@
 import axios from "axios";
 import { reactive, ref, onMounted } from "vue";
 import { useCategoriesStore } from "@/stores/categories";
-import { storeToRefs } from "pinia";
+// import { storeToRefs } from "pinia";
 
 onMounted(async () => {
   await getCategories();

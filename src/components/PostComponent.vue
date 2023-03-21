@@ -27,7 +27,7 @@ const getUserImage = (fileName) => {
 const getPostImage = (fileName) => {
   return "http://localhost:8000/storage/" + fileName;
 };
-console.log(props.posts);
+
 const posts = ref(props.posts);
 
 const Modal = ref(false);
@@ -76,7 +76,7 @@ const removeLike = async (like_id) => {
     console.log(err);
   }
 };
-
+// console.log(posts);
 const hasLikedPost = (post) => {
   return post.likes.some((like) => like?.user?.id === user?.id);
 };

@@ -1,7 +1,7 @@
 <script setup>
 import PostComponent from "./PostComponent.vue";
 import axios from "axios";
-import { onMounted, computed, reactive } from "vue";
+import { onMounted, computed, reactive, watch } from "vue";
 import { useSuccessStore } from "@/stores/success";
 import SuccessModal from "./utils/SuccessModal.vue";
 import { useCategoriesStore } from "@/stores/categories";
@@ -31,11 +31,30 @@ const filteredPosts = computed(() => {
   if (categories.state.categories?.length === 0) {
     return posts;
   } else {
-    return posts.filter((post) =>
-      categories.state.categories.includes(post.categories[0].id)
-    );
+    return posts.filter((post) => {
+      return post.categories.every((category) => {
+        return categories.state.categories.includes(category.id);
+      });
+    });
   }
 });
+
+watch(
+  () => categories.state.categories,
+  () => {
+    // The selected categories have changed, so update the filtered posts
+    if (categories.state.categories?.length === 0) {
+      posts.forEach((post) => (post.display = true));
+    } else {
+      posts.forEach((post) => {
+        post.display = post.categories.some((category) =>
+          categories.state.categories.includes(category.id)
+        );
+      });
+    }
+  }
+);
+console.log("ll");
 console.log(filteredPosts);
 </script>
 
