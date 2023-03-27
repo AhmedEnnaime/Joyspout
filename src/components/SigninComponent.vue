@@ -3,12 +3,13 @@ import { RouterLink } from "vue-router";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { reactive } from "vue";
+import { useAuthStore } from "@/stores/auth";
 
 const credentials = reactive({
   email: "",
   password: "",
 });
-
+const auth = useAuthStore();
 const url = "http://localhost:8000/api";
 const router = useRouter();
 
@@ -17,7 +18,8 @@ const login = async () => {
     .post(`${url}/login`, credentials)
     .then((res) => {
       if (res.status === 200) {
-        sessionStorage.setItem("token", res.data.data.token);
+        sessionStorage.setItem("token", res.data.data.token.token);
+        auth.setUser(res.data.data.user);
         router.push("/");
       }
     })

@@ -6,17 +6,14 @@ import SharePost from "@/components/SharePost.vue";
 import FilterBar from "@/components/FilterBar.vue";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
 
 const token = sessionStorage.getItem("token");
 const router = useRouter();
-const user = useAuthStore();
 
 onMounted(async () => {
   if (!token) {
     router.push("/login");
   }
-  await user.getAuthUser();
 });
 </script>
 
