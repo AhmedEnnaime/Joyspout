@@ -64,8 +64,12 @@ const getPosts = async () => {
           {{ posts.length }}
         </div>
       </div>
-      <div v-if="posts.length == 0">
-        <img src="@/assets/img/no-results.png" alt="no-results" />
+      <div class="flex justify-center p-4" v-if="posts.length == 0">
+        <img
+          class="w-24 h-24"
+          src="@/assets/img/no-results.png"
+          alt="no-results"
+        />
       </div>
       <div
         v-else

@@ -3,7 +3,6 @@ import NavbarComponent from "@/components/NavbarComponent.vue";
 import LeftSide from "@/components/LeftSide.vue";
 import HomeComponent from "@/components/HomeComponent.vue";
 import SharePost from "@/components/SharePost.vue";
-import FilterBar from "@/components/FilterBar.vue";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
@@ -26,7 +25,6 @@ onMounted(async () => {
         <SharePost />
         <HomeComponent />
       </div>
-      <FilterBar />
     </div>
   </div>
 </template>
